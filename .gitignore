@@ -14,3 +14,4 @@ server/data/*.db-journal
 .DS_Store
 Thumbs.db
 *.apk
+cloudflared.exe

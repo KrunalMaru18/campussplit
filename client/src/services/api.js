@@ -11,7 +11,7 @@ export const isNativeApp = () => {
   );
 };
 
-export const DEFAULT_SERVER_URL = 'http://172.20.10.3:5000';
+export const DEFAULT_SERVER_URL = 'https://miracle-calculate-jump-season.trycloudflare.com';
 
 export function getServerBaseUrl() {
   if (typeof window !== 'undefined') {

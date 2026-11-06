@@ -1,3 +1,4 @@
+const path = require('path');
 const http = require('http');
 const express = require('express');
 const cors = require('cors');
@@ -94,6 +95,18 @@ app.use('/api/expenses', expenseRoutes);
 app.use('/api/settlements', settlementRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/admin', adminRoutes);
+
+// Serve static frontend assets from client/dist (for Web, iOS PWA, and direct cloud links)
+const clientDistPath = path.resolve(__dirname, '../../client/dist');
+app.use(express.static(clientDistPath));
+
+// Single Page Application (SPA) catch-all fallback
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    return next();
+  }
+  res.sendFile(path.join(clientDistPath, 'index.html'));
+});
 
 // Global Error Handler
 app.use((err, req, res, next) => {

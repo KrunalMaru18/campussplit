@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Server, Check, X, RefreshCw, AlertCircle, Wifi } from 'lucide-react';
 import { getServerBaseUrl, setServerBaseUrl, DEFAULT_SERVER_URL } from '../../services/api';
 
@@ -78,7 +78,7 @@ export default function ServerSettingsModal({ isOpen, onClose, onSaved }) {
                   setUrl(e.target.value);
                   setTestResult(null);
                 }}
-                placeholder="http://172.20.10.3:5000"
+                placeholder="https://miracle-calculate-jump-season.trycloudflare.com"
                 className="w-full pl-9 pr-3 py-2 bg-slate-50 dark:bg-black border border-slate-200 dark:border-neutral-800 rounded-xl text-xs font-mono font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
