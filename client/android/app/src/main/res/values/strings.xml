@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">CampusSplit</string>
+    <string name="title_activity_main">CampusSplit</string>
+    <string name="package_name">com.campussplit.app</string>
+    <string name="custom_url_scheme">com.campussplit.app</string>
+</resources>

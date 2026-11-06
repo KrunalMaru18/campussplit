@@ -1,0 +1,15 @@
+{
+  "name": "campussplit",
+  "version": "1.0.0",
+  "description": "CampusSplit – Spend Together, Split Smartly (College Group Expense Sharing Platform)",
+  "scripts": {
+    "server": "npm --prefix server start",
+    "server:dev": "npm --prefix server dev",
+    "client": "npm --prefix client dev",
+    "build": "npm --prefix client build",
+    "seed": "npm --prefix server seed",
+    "start": "node start.js"
+  },
+  "keywords": ["splitwise", "college", "expense-sharing", "debt-simplification", "fintech"],
+  "author": "CampusSplit Team"
+}
