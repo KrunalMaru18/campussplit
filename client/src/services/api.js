@@ -11,7 +11,7 @@ export const isNativeApp = () => {
   );
 };
 
-export const DEFAULT_SERVER_URL = 'https://miracle-calculate-jump-season.trycloudflare.com';
+export const DEFAULT_SERVER_URL = 'https://features-generating-prize-life.trycloudflare.com';
 
 export function getServerBaseUrl() {
   if (typeof window !== 'undefined') {
