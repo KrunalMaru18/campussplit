@@ -11,15 +11,17 @@ export const isNativeApp = () => {
   );
 };
 
-export const DEFAULT_SERVER_URL = 'https://features-generating-prize-life.trycloudflare.com';
+// Default backend URL fallback
+export const DEFAULT_SERVER_URL = import.meta.env.VITE_API_URL || 'https://features-generating-prize-life.trycloudflare.com';
 
 export function getServerBaseUrl() {
   if (typeof window !== 'undefined') {
     const custom = localStorage.getItem('campussplit_server_url');
     if (custom) return custom.trim().replace(/\/+$/, '');
+    if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
     if (isNativeApp()) return DEFAULT_SERVER_URL;
   }
-  return '';
+  return import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '') : '';
 }
 
 export function setServerBaseUrl(url) {
@@ -44,7 +46,33 @@ export function setAuthToken(token) {
   }
 }
 
-async function request(endpoint, options = {}) {
+// Timeout duration in milliseconds
+const REQUEST_TIMEOUT_MS = 15000;
+
+async function executeFetch(url, options) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (err) {
+    clearTimeout(timeoutId);
+    if (err.name === 'AbortError') {
+      const timeoutErr = new Error('Request timed out. The server took too long to respond.');
+      timeoutErr.isTimeout = true;
+      timeoutErr.isNetworkError = true;
+      throw timeoutErr;
+    }
+    throw err;
+  }
+}
+
+async function request(endpoint, options = {}, retries = 1) {
   const token = getAuthToken();
   const headers = {
     'Content-Type': 'application/json',
@@ -56,15 +84,26 @@ async function request(endpoint, options = {}) {
   }
 
   const baseUrl = `${getServerBaseUrl()}/api`;
+  const fullUrl = `${baseUrl}${endpoint}`;
   let response;
+
   try {
-    response = await fetch(`${baseUrl}${endpoint}`, {
+    response = await executeFetch(fullUrl, {
       ...options,
       headers,
     });
   } catch (err) {
-    const currentServer = getServerBaseUrl() || window.location.origin;
-    const msg = `Unable to reach server at ${currentServer}. Please verify your phone is on the same Wi-Fi/Hotspot, or update the Server Address below.`;
+    // Retry once for GET requests on transient network drops
+    const isGet = !options.method || options.method.toUpperCase() === 'GET';
+    if (retries > 0 && isGet && !err.isTimeout) {
+      await new Promise((r) => setTimeout(r, 1000));
+      return request(endpoint, options, retries - 1);
+    }
+
+    const currentServer = getServerBaseUrl() || (typeof window !== 'undefined' ? window.location.origin : '');
+    const msg = err.isTimeout
+      ? 'Connection timed out. Please check your internet connection or server status.'
+      : `Unable to reach server. Please check your internet connection or verify the server is running.`;
     const netErr = new Error(msg);
     netErr.isNetworkError = true;
     netErr.serverUrl = currentServer;

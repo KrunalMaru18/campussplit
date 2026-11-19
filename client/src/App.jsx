@@ -16,18 +16,30 @@ import CreateGroupModal from './components/groups/CreateGroupModal';
 import JoinGroupModal from './components/groups/JoinGroupModal';
 import InstallPrompt from './components/common/InstallPrompt';
 
-// Pages
+// Primary Pages (Eager loaded for instant first paint)
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import Groups from './pages/Groups';
-import GroupDetails from './pages/GroupDetails';
-import Analytics from './pages/Analytics';
-import Activity from './pages/Activity';
-import Profile from './pages/Profile';
-import JoinGroupDirect from './pages/JoinGroupDirect';
-import AdminLogin from './pages/admin/AdminLogin';
-import AdminDashboard from './pages/admin/AdminDashboard';
+
+// Secondary & Admin Pages (Lazy loaded for fast mobile loading speed)
+const GroupDetails = React.lazy(() => import('./pages/GroupDetails'));
+const Analytics = React.lazy(() => import('./pages/Analytics'));
+const Activity = React.lazy(() => import('./pages/Activity'));
+const Profile = React.lazy(() => import('./pages/Profile'));
+const JoinGroupDirect = React.lazy(() => import('./pages/JoinGroupDirect'));
+const AdminLogin = React.lazy(() => import('./pages/admin/AdminLogin'));
+const AdminDashboard = React.lazy(() => import('./pages/admin/AdminDashboard'));
+
+// Smooth Suspense Page Loader
+function PageLoadingFallback() {
+  return (
+    <div className="min-h-[50vh] flex flex-col items-center justify-center p-8 space-y-3">
+      <div className="w-9 h-9 border-3 border-purple-600/30 border-t-purple-600 rounded-full animate-spin"></div>
+      <p className="text-xs font-medium text-slate-400 dark:text-neutral-500">Loading view...</p>
+    </div>
+  );
+}
 
 // Route Guard
 function ProtectedRoute({ children }) {
@@ -105,24 +117,26 @@ function AppLayout() {
         />
 
         <main className="flex-1 overflow-x-hidden">
-          <Routes>
-            <Route
-              path="/dashboard"
-              element={
-                <Dashboard
-                  onOpenAddExpense={() => setIsAddExpenseOpen(true)}
-                  onOpenCreateGroup={() => setIsCreateGroupOpen(true)}
-                  onOpenJoinGroup={() => setIsJoinGroupOpen(true)}
-                />
-              }
-            />
-            <Route path="/groups" element={<Groups />} />
-            <Route path="/groups/:groupId" element={<GroupDetails />} />
-            <Route path="/activity" element={<Activity />} />
-            <Route path="/analytics" element={<Analytics />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
-          </Routes>
+          <React.Suspense fallback={<PageLoadingFallback />}>
+            <Routes>
+              <Route
+                path="/dashboard"
+                element={
+                  <Dashboard
+                    onOpenAddExpense={() => setIsAddExpenseOpen(true)}
+                    onOpenCreateGroup={() => setIsCreateGroupOpen(true)}
+                    onOpenJoinGroup={() => setIsJoinGroupOpen(true)}
+                  />
+                }
+              />
+              <Route path="/groups" element={<Groups />} />
+              <Route path="/groups/:groupId" element={<GroupDetails />} />
+              <Route path="/activity" element={<Activity />} />
+              <Route path="/analytics" element={<Analytics />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            </Routes>
+          </React.Suspense>
         </main>
 
         {/* Mobile Bottom Nav */}
@@ -161,33 +175,35 @@ export default function App() {
         <AuthProvider>
           <ToastProvider>
             <SocketProvider>
-              <Routes>
-                {/* Public Routes */}
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/join/:inviteCode" element={<JoinGroupDirect />} />
-                <Route path="/admin/login" element={<AdminLogin />} />
+              <React.Suspense fallback={<PageLoadingFallback />}>
+                <Routes>
+                  {/* Public Routes */}
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<Signup />} />
+                  <Route path="/join/:inviteCode" element={<JoinGroupDirect />} />
+                  <Route path="/admin/login" element={<AdminLogin />} />
 
-                {/* Dedicated Super Admin Portal */}
-                <Route
-                  path="/admin"
-                  element={
-                    <AdminRoute>
-                      <AdminDashboard />
-                    </AdminRoute>
-                  }
-                />
+                  {/* Dedicated Super Admin Portal */}
+                  <Route
+                    path="/admin"
+                    element={
+                      <AdminRoute>
+                        <AdminDashboard />
+                      </AdminRoute>
+                    }
+                  />
 
-                {/* Standard Student App */}
-                <Route
-                  path="/*"
-                  element={
-                    <ProtectedRoute>
-                      <AppLayout />
-                    </ProtectedRoute>
-                  }
-                />
-              </Routes>
+                  {/* Standard Student App */}
+                  <Route
+                    path="/*"
+                    element={
+                      <ProtectedRoute>
+                        <AppLayout />
+                      </ProtectedRoute>
+                    }
+                  />
+                </Routes>
+              </React.Suspense>
             </SocketProvider>
           </ToastProvider>
         </AuthProvider>

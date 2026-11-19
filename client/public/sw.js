@@ -1,30 +1,33 @@
-// CampusSplit Service Worker
-const CACHE_NAME = 'campussplit-v1';
-const STATIC_ASSETS = [
+// CampusSplit Production PWA Service Worker (v2)
+const CACHE_NAME = 'campussplit-v2';
+const APP_SHELL = [
   '/',
   '/index.html',
   '/manifest.json',
   '/icons/icon-192.svg',
-  '/icons/icon-512.svg'
+  '/icons/icon-512.svg',
+  '/icons/icon-192.png',
+  '/icons/icon-512.png'
 ];
 
-// Install Event: cache core app shell
+// Install Event: pre-cache application shell
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(STATIC_ASSETS);
+      return cache.addAll(APP_SHELL);
     })
   );
   self.skipWaiting();
 });
 
-// Activate Event: cleanup older caches
+// Activate Event: clear old caches immediately on update
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
+            console.log('🧹 Purging outdated service worker cache:', key);
             return caches.delete(key);
           }
         })
@@ -34,39 +37,68 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch Event: Network-first with fallback to cache for offline support
+// Fetch Event: Smart network-first for pages, cache-first for immutable Vite assets
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
-  // Skip WebSocket, Socket.io, and backend API requests from static caching
-  if (url.pathname.startsWith('/api') || url.pathname.startsWith('/socket.io')) {
+  // 1. Never intercept backend API requests or real-time WebSockets
+  if (
+    url.pathname.startsWith('/api') ||
+    url.pathname.startsWith('/socket.io') ||
+    event.request.method !== 'GET'
+  ) {
     return;
   }
 
-  // Handle page navigations & static assets
+  // 2. Navigation requests: Network first with cached index.html fallback
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request).catch(() => {
-        return caches.match('/index.html') || caches.match('/');
+      fetch(event.request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          }
+          return response;
+        })
+        .catch(() => {
+          return caches.match('/index.html') || caches.match('/');
+        })
+    );
+    return;
+  }
+
+  // 3. Vite static assets (/assets/): Cache-first with network fallback
+  if (url.pathname.startsWith('/assets/')) {
+    event.respondWith(
+      caches.match(event.request).then((cached) => {
+        if (cached) return cached;
+        return fetch(event.request).then((response) => {
+          if (response && response.status === 200) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          }
+          return response;
+        });
       })
     );
     return;
   }
 
+  // 4. Default strategy for icons, fonts, manifest: Stale-while-revalidate
   event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        // Clone and cache successful GET responses for assets
-        if (response && response.status === 200 && response.type === 'basic' && event.request.method === 'GET') {
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
-        }
-        return response;
-      })
-      .catch(() => {
-        return caches.match(event.request);
-      })
+    caches.match(event.request).then((cached) => {
+      const networkFetch = fetch(event.request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          }
+          return response;
+        })
+        .catch(() => cached);
+
+      return cached || networkFetch;
+    })
   );
 });

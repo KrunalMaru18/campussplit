@@ -12,6 +12,7 @@ export default function Groups() {
   const { user } = useAuth();
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
 
@@ -21,10 +22,12 @@ export default function Groups() {
   const loadGroups = async () => {
     try {
       setLoading(true);
+      setError('');
       const res = await groupsApi.getAll();
       setGroups(res.groups || []);
     } catch (err) {
       console.error('Failed to load groups:', err);
+      setError(err.message || 'Unable to load groups.');
     } finally {
       setLoading(false);
     }
@@ -70,6 +73,20 @@ export default function Groups() {
           </button>
         </div>
       </div>
+
+      {error && (
+        <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 text-amber-800 dark:text-amber-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+          <div className="text-xs sm:text-sm font-medium">
+            <span>{error}</span>
+          </div>
+          <button
+            onClick={loadGroups}
+            className="px-3.5 py-1.5 rounded-xl bg-amber-600 text-white font-semibold text-xs hover:bg-amber-700 active:scale-95 transition-all self-end sm:self-auto"
+          >
+            Retry
+          </button>
+        </div>
+      )}
 
       {/* Search & Filter Toolbar */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3">

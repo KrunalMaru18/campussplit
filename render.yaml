@@ -3,8 +3,8 @@ services:
     name: campussplit
     env: node
     plan: free
-    buildCommand: npm --prefix server install && npm --prefix client install && npm --prefix client run build
-    startCommand: node server/src/server.js
+    buildCommand: npm run build:all
+    startCommand: npm run start:prod
     envVars:
       - key: PORT
         value: 10000

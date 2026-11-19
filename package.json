@@ -6,9 +6,11 @@
     "server": "npm --prefix server start",
     "server:dev": "npm --prefix server dev",
     "client": "npm --prefix client dev",
-    "build": "npm --prefix client build",
+    "build": "npm --prefix client run build",
+    "build:all": "npm --prefix server install && npm --prefix client install && npm --prefix client run build",
+    "start:prod": "node server/src/server.js",
     "seed": "npm --prefix server seed",
-    "start": "node start.js"
+    "start": "node server/src/server.js"
   },
   "keywords": ["splitwise", "college", "expense-sharing", "debt-simplification", "fintech"],
   "author": "CampusSplit Team"

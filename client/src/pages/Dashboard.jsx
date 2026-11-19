@@ -83,6 +83,22 @@ export default function Dashboard({ onOpenAddExpense, onOpenCreateGroup, onOpenJ
 
   return (
     <div className="p-4 sm:p-8 space-y-8 max-w-7xl mx-auto pb-24 lg:pb-8">
+      {/* Network / Connection Error Banner */}
+      {error && (
+        <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 text-amber-800 dark:text-amber-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+          <div className="flex items-center gap-2.5 text-xs sm:text-sm font-medium">
+            <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
+            <span>{error}</span>
+          </div>
+          <button
+            onClick={() => loadDashboard()}
+            className="px-3.5 py-1.5 rounded-xl bg-amber-600 text-white font-semibold text-xs hover:bg-amber-700 active:scale-95 transition-all self-end sm:self-auto"
+          >
+            Retry Connection
+          </button>
+        </div>
+      )}
+
       {/* Welcome Banner */}
       <div className="relative overflow-hidden rounded-3xl gradient-brand p-6 sm:p-8 text-white shadow-xl shadow-purple-900/10">
         {/* Background decorative circles */}
