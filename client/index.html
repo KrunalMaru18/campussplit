@@ -29,6 +29,7 @@
       <style>
         .cs-initial-loader {
           min-height: 100vh;
+          min-height: 100dvh;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -38,6 +39,8 @@
           color: #17172B;
           padding: 24px;
           text-align: center;
+          position: relative;
+          overflow: hidden;
         }
         @media (prefers-color-scheme: dark) {
           .cs-initial-loader {
@@ -45,77 +48,136 @@
             color: #FFFFFF;
           }
         }
+        .cs-ambient-glow {
+          position: absolute;
+          width: 320px;
+          height: 320px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(102, 84, 217, 0.25) 0%, rgba(145, 127, 242, 0) 70%);
+          filter: blur(40px);
+          pointer-events: none;
+        }
         .cs-logo-box {
-          width: 56px;
-          height: 56px;
-          border-radius: 18px;
-          background: linear-gradient(135deg, #6654D9 0%, #917FF2 100%);
+          position: relative;
+          width: 80px;
+          height: 80px;
+          border-radius: 24px;
+          background: linear-gradient(135deg, #6654D9 0%, #7B69E8 50%, #917FF2 100%);
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 10px 25px -5px rgba(102, 84, 217, 0.4);
-          margin-bottom: 16px;
+          box-shadow: 0 16px 36px -8px rgba(102, 84, 217, 0.55);
+          margin-bottom: 20px;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          animation: cs-breathe 2.4s ease-in-out infinite;
+        }
+        @keyframes cs-breathe {
+          0%, 100% { transform: scale(1); box-shadow: 0 16px 36px -8px rgba(102, 84, 217, 0.55); }
+          50% { transform: scale(1.04); box-shadow: 0 20px 44px -6px rgba(102, 84, 217, 0.7); }
         }
         .cs-logo-svg {
-          width: 32px;
-          height: 32px;
-          stroke: #ffffff;
-          fill: none;
-          stroke-width: 2.5;
+          width: 44px;
+          height: 44px;
         }
-        .cs-title {
-          font-size: 22px;
+        .cs-title-wrap {
+          display: flex;
+          align-items: baseline;
+          justify-content: center;
+          margin-bottom: 6px;
+        }
+        .cs-title-bold {
+          font-size: 32px;
           font-weight: 900;
-          letter-spacing: -0.02em;
-          margin: 0 0 4px 0;
+          letter-spacing: -0.03em;
+          color: #17172B;
+        }
+        @media (prefers-color-scheme: dark) {
+          .cs-title-bold { color: #FFFFFF; }
+        }
+        .cs-title-gradient {
+          font-size: 32px;
+          font-weight: 900;
+          letter-spacing: -0.03em;
+          background: linear-gradient(135deg, #6654D9 0%, #917FF2 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        .cs-dot {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: #6654D9;
+          margin-left: 3px;
         }
         .cs-subtitle {
-          font-size: 13px;
+          font-size: 14px;
           color: #7E7D9C;
-          margin: 0 0 24px 0;
+          margin: 0 0 28px 0;
           font-weight: 600;
         }
-        .cs-spinner {
-          width: 28px;
-          height: 28px;
-          border: 3px solid rgba(102, 84, 217, 0.2);
-          border-top-color: #6654D9;
-          border-radius: 50%;
-          animation: cs-spin 0.8s linear infinite;
+        .cs-progress-bar-shell {
+          width: 200px;
+          height: 5px;
+          background: #EAE9F5;
+          border-radius: 999px;
+          overflow: hidden;
+          position: relative;
         }
-        @keyframes cs-spin {
-          to { transform: rotate(360deg); }
+        @media (prefers-color-scheme: dark) {
+          .cs-progress-bar-shell { background: #21213E; }
+        }
+        .cs-progress-bar-fill {
+          position: absolute;
+          left: -40%;
+          width: 40%;
+          height: 100%;
+          background: linear-gradient(90deg, #6654D9, #917FF2, #DCD6FF);
+          border-radius: 999px;
+          animation: cs-loading 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        @keyframes cs-loading {
+          0% { left: -40%; width: 40%; }
+          50% { left: 30%; width: 50%; }
+          100% { left: 100%; width: 30%; }
         }
         .cs-slow-hint {
           display: none;
-          margin-top: 24px;
+          margin-top: 28px;
           font-size: 12px;
-          color: #94a3b8;
+          color: #7E7D9C;
           max-width: 280px;
         }
         .cs-reload-btn {
           margin-top: 10px;
-          background: #7c3aed;
+          background: linear-gradient(135deg, #6654D9, #917FF2);
           color: white;
           border: none;
-          padding: 8px 16px;
-          border-radius: 10px;
+          padding: 8px 18px;
+          border-radius: 12px;
           font-size: 12px;
-          font-weight: 600;
+          font-weight: 700;
           cursor: pointer;
+          box-shadow: 0 4px 14px rgba(102, 84, 217, 0.35);
         }
       </style>
       <div class="cs-initial-loader">
+        <div class="cs-ambient-glow"></div>
         <div class="cs-logo-box">
-          <svg class="cs-logo-svg" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10" />
-            <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
-            <path d="M12 18V6" />
+          <svg class="cs-logo-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M23 10.5C21.6 7.8 18.5 6 15 6C9.5 6 5 10.5 5 16C5 18.2 5.7 20.2 6.9 21.8" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round"/>
+            <path d="M9 21.5C10.4 24.2 13.5 26 17 26C22.5 26 27 21.5 27 16C27 13.8 26.3 11.8 25.1 10.2" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round"/>
+            <circle cx="16" cy="16" r="3.2" fill="#DCD6FF"/>
+            <path d="M11 21L21 11" stroke="#DCD6FF" stroke-width="2.2" stroke-linecap="round"/>
           </svg>
         </div>
-        <h1 class="cs-title">CampusSplit</h1>
+        <div class="cs-title-wrap">
+          <span class="cs-title-bold">Campus</span><span class="cs-title-gradient">Split</span>
+          <span class="cs-dot"></span>
+        </div>
         <p class="cs-subtitle">Spend Together, Split Smartly</p>
-        <div class="cs-spinner"></div>
+        <div class="cs-progress-bar-shell">
+          <div class="cs-progress-bar-fill"></div>
+        </div>
         <div id="cs-slow-notice" class="cs-slow-hint">
           <p>Taking longer than usual?</p>
           <button class="cs-reload-btn" onclick="window.location.reload()">Reload Application</button>

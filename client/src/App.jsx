@@ -15,6 +15,7 @@ import AddExpenseModal from './components/expenses/AddExpenseModal';
 import CreateGroupModal from './components/groups/CreateGroupModal';
 import JoinGroupModal from './components/groups/JoinGroupModal';
 import InstallPrompt from './components/common/InstallPrompt';
+import SplashScreen from './components/common/SplashScreen';
 
 // Primary Pages (Eager loaded for instant first paint)
 import Login from './pages/Login';
@@ -47,8 +48,9 @@ function ProtectedRoute({ children }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#F7F7FC] dark:bg-[#17172B]">
-        <div className="w-10 h-10 border-4 border-[#6654D9] border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F7F7FC] dark:bg-[#17172B] gap-3">
+        <div className="w-10 h-10 border-4 border-[#6654D9]/30 border-t-[#6654D9] rounded-full animate-spin"></div>
+        <p className="text-xs font-semibold text-[#7E7D9C] dark:text-[#A5A4BF]">Verifying session...</p>
       </div>
     );
   }
@@ -124,7 +126,7 @@ function AppLayout() {
   };
 
   return (
-    <div className="flex min-h-screen bg-white dark:bg-black text-slate-900 dark:text-white font-sans transition-colors duration-200">
+    <div className="flex min-h-screen bg-[#F7F7FC] dark:bg-[#17172B] text-[#17172B] dark:text-white font-sans transition-colors duration-200">
       {/* Desktop Sidebar */}
       <Sidebar onOpenAddExpense={() => setIsAddExpenseOpen(true)} />
 
@@ -187,6 +189,52 @@ function AppLayout() {
   );
 }
 
+function AppContent() {
+  const { loading } = useAuth();
+  const [showSplash, setShowSplash] = useState(true);
+
+  return (
+    <>
+      {showSplash && (
+        <SplashScreen
+          isReady={!loading}
+          minDuration={900}
+          onFinished={() => setShowSplash(false)}
+        />
+      )}
+      <React.Suspense fallback={<PageLoadingFallback />}>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/join/:inviteCode" element={<JoinGroupDirect />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+
+          {/* Dedicated Super Admin Portal */}
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminDashboard />
+              </AdminRoute>
+            }
+          />
+
+          {/* Standard Student App */}
+          <Route
+            path="/*"
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </React.Suspense>
+    </>
+  );
+}
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -194,35 +242,7 @@ export default function App() {
         <AuthProvider>
           <ToastProvider>
             <SocketProvider>
-              <React.Suspense fallback={<PageLoadingFallback />}>
-                <Routes>
-                  {/* Public Routes */}
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/signup" element={<Signup />} />
-                  <Route path="/join/:inviteCode" element={<JoinGroupDirect />} />
-                  <Route path="/admin/login" element={<AdminLogin />} />
-
-                  {/* Dedicated Super Admin Portal */}
-                  <Route
-                    path="/admin"
-                    element={
-                      <AdminRoute>
-                        <AdminDashboard />
-                      </AdminRoute>
-                    }
-                  />
-
-                  {/* Standard Student App */}
-                  <Route
-                    path="/*"
-                    element={
-                      <ProtectedRoute>
-                        <AppLayout />
-                      </ProtectedRoute>
-                    }
-                  />
-                </Routes>
-              </React.Suspense>
+              <AppContent />
             </SocketProvider>
           </ToastProvider>
         </AuthProvider>
