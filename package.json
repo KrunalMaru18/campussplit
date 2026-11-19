@@ -7,7 +7,7 @@
     "server:dev": "npm --prefix server dev",
     "client": "npm --prefix client dev",
     "build": "npm --prefix client run build",
-    "build:all": "npm --prefix server install && npm --prefix client install && npm --prefix client run build",
+    "build:all": "npm --prefix server install && npm --prefix client install --include=dev && npm --prefix client run build",
     "start:prod": "node server/src/server.js",
     "seed": "npm --prefix server seed",
     "start": "node server/src/server.js"
