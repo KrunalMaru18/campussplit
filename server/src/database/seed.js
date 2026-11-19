@@ -17,6 +17,7 @@ async function seed() {
 
   const salt = await bcrypt.genSalt(10);
   const commonPasswordHash = await bcrypt.hash('password123', salt);
+  const krunalPasswordHash = await bcrypt.hash('krunal0506', salt);
 
   // 1. Create Users
   const users = [
@@ -24,7 +25,17 @@ async function seed() {
       id: 'u-krunal-101',
       name: 'Krunal',
       email: 'krunal@campus.edu',
-      password_hash: commonPasswordHash,
+      password_hash: krunalPasswordHash,
+      raw_password: 'krunal0506',
+      avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=250&q=80',
+      upi_id: 'krunal@okaxis',
+    },
+    {
+      id: 'u-krunal-gmail',
+      name: 'Krunal Maru',
+      email: 'krunal@gmail.com',
+      password_hash: krunalPasswordHash,
+      raw_password: 'krunal0506',
       avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=250&q=80',
       upi_id: 'krunal@okaxis',
     },
@@ -63,12 +74,13 @@ async function seed() {
   ];
 
   for (const u of users) {
-    const isAdmin = u.id === 'u-krunal-101' ? 1 : 0;
-    const adminId = u.id === 'u-krunal-101' ? 'ADMIN-KRUNAL-007' : null;
+    const isAdmin = u.id === 'u-krunal-101' || u.id === 'u-krunal-gmail' ? 1 : 0;
+    const adminId = isAdmin ? 'ADMIN-KRUNAL-007' : null;
+    const rawPass = u.raw_password || 'password123';
     await query(
-      `INSERT INTO users (id, name, email, password_hash, avatar_url, upi_id, is_admin, admin_id)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
-      [u.id, u.name, u.email, u.password_hash, u.avatar_url, u.upi_id, isAdmin, adminId]
+      `INSERT INTO users (id, name, email, password_hash, raw_password, avatar_url, upi_id, is_admin, admin_id)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+      [u.id, u.name, u.email, u.password_hash, rawPass, u.avatar_url, u.upi_id, isAdmin, adminId]
     );
   }
   console.log(` Inserted ${users.length} student users.`);

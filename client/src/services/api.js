@@ -11,8 +11,8 @@ export const isNativeApp = () => {
   );
 };
 
-// Default backend URL fallback
-export const DEFAULT_SERVER_URL = import.meta.env.VITE_API_URL || 'https://features-generating-prize-life.trycloudflare.com';
+// Default backend URL fallback (Permanent Render Cloud URL)
+export const DEFAULT_SERVER_URL = import.meta.env.VITE_API_URL || 'https://campussplit-vskl.onrender.com';
 
 export function getServerBaseUrl() {
   if (typeof window !== 'undefined') {
