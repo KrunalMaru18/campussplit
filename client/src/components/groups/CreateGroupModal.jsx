@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Users, Sparkles, AlertCircle } from 'lucide-react';
+import { X, Users, AlertCircle } from 'lucide-react';
 import { groupsApi } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 
@@ -53,36 +53,36 @@ export default function CreateGroupModal({ isOpen, onClose, onSuccess }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm overflow-y-auto animate-fade-in">
-      <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden my-8">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-sm overflow-y-auto animate-fade-in">
+      <div className="relative w-full max-w-md bg-white dark:bg-[#21213E] rounded-t-3xl sm:rounded-3xl shadow-2xl border border-[#EAE9F5] dark:border-[rgba(145,127,242,0.2)] overflow-hidden my-0 sm:my-8 transition-all">
         <div className="gradient-brand p-5 text-white flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold flex items-center gap-2">
-              <Users className="w-5 h-5" />
+            <h2 className="text-lg font-black flex items-center gap-2">
+              <Users className="w-5 h-5 stroke-[2.5]" />
               <span>Create New Group</span>
             </h2>
-            <p className="text-xs text-purple-200 mt-0.5">
+            <p className="text-xs text-[#DCD6FF] mt-0.5 font-medium">
               Organize shared expenses with your college peers
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 hover:bg-white/10 rounded-full transition-colors"
+            className="p-1.5 hover:bg-white/20 rounded-full transition-colors"
           >
             <X className="w-5 h-5 text-white" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-5 sm:p-6 space-y-4">
           {error && (
-            <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+            <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2 font-bold">
               <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
               <span>{error}</span>
             </div>
           )}
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-black text-[#17172B] dark:text-white uppercase tracking-wider mb-1.5">
               Group Name
             </label>
             <input
@@ -91,12 +91,12 @@ export default function CreateGroupModal({ isOpen, onClose, onSuccess }) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full px-3.5 py-2.5 bg-white dark:bg-[#17172B] border border-[#DCD6FF] dark:border-[rgba(145,127,242,0.25)] rounded-xl text-xs font-bold text-[#17172B] dark:text-white placeholder-[#7E7D9C] focus:outline-none focus:ring-2 focus:ring-[#6654D9]"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-black text-[#17172B] dark:text-white uppercase tracking-wider mb-1.5">
               Category
             </label>
             <div className="grid grid-cols-2 gap-2">
@@ -105,10 +105,10 @@ export default function CreateGroupModal({ isOpen, onClose, onSuccess }) {
                   key={cat.id}
                   type="button"
                   onClick={() => setCategory(cat.id)}
-                  className={`p-2.5 rounded-xl border text-left flex items-center gap-2 text-xs font-medium transition-all ${
+                  className={`p-2 rounded-xl border text-xs font-bold flex items-center gap-2 transition-all ${
                     category === cat.id
-                      ? 'bg-purple-50 border-purple-400 text-purple-900 shadow-sm'
-                      : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                      ? 'bg-[#6654D9]/15 border-[#6654D9] text-[#6654D9] dark:text-[#DCD6FF] shadow-sm'
+                      : 'bg-white dark:bg-[#17172B] border-[#DCD6FF] dark:border-[rgba(145,127,242,0.2)] text-[#636280] dark:text-[#A5A4BF]'
                   }`}
                 >
                   <span className="text-base">{cat.icon}</span>
@@ -119,30 +119,30 @@ export default function CreateGroupModal({ isOpen, onClose, onSuccess }) {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-black text-[#17172B] dark:text-white uppercase tracking-wider mb-1.5">
               Description (Optional)
             </label>
             <textarea
               rows={2}
-              placeholder="e.g. Groceries, WiFi, and cleaning splits"
+              placeholder="e.g. Room rent, groceries, wifi and electricity bills"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full px-3.5 py-2.5 bg-white dark:bg-[#17172B] border border-[#DCD6FF] dark:border-[rgba(145,127,242,0.25)] rounded-xl text-xs font-semibold text-[#17172B] dark:text-white placeholder-[#7E7D9C] focus:outline-none focus:ring-2 focus:ring-[#6654D9]"
             />
           </div>
 
-          <div className="pt-3 flex items-center justify-end gap-3 border-t border-slate-100">
+          <div className="pt-3 flex items-center justify-end gap-3 border-t border-[#EAE9F5] dark:border-[rgba(145,127,242,0.16)]">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-semibold text-xs hover:bg-slate-50 transition-colors"
+              className="px-4 py-2.5 rounded-xl border border-[#DCD6FF] dark:border-[rgba(145,127,242,0.3)] text-[#636280] dark:text-[#A5A4BF] font-bold text-xs hover:bg-[#F0EFF9] dark:hover:bg-[#17172B] transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-2.5 rounded-xl gradient-brand text-white font-semibold text-xs shadow-md shadow-purple-600/30 hover:brightness-110 active:scale-95 disabled:opacity-50 transition-all flex items-center gap-1.5"
+              className="px-6 py-2.5 rounded-xl gradient-brand text-white font-black text-xs shadow-md shadow-[#6654D9]/30 hover:brightness-105 active:scale-95 disabled:opacity-50 transition-all flex items-center gap-1.5"
             >
               {loading ? <span>Creating...</span> : <span>Create Group</span>}
             </button>

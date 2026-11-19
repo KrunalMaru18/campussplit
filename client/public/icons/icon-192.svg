@@ -1,44 +1,41 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#7c3aed"/>
-      <stop offset="100%" stop-color="#4338ca"/>
+      <stop offset="0%" stop-color="#6654D9"/>
+      <stop offset="100%" stop-color="#917FF2"/>
     </linearGradient>
-    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fde047"/>
-      <stop offset="100%" stop-color="#eab308"/>
+    <linearGradient id="prism" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#DCD6FF"/>
     </linearGradient>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000" flood-opacity="0.3"/>
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#17172B" flood-opacity="0.45"/>
     </filter>
   </defs>
   
   <!-- Base Background -->
-  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <rect width="512" height="512" rx="120" fill="url(#bg)"/>
   
   <!-- Outer glowing accent ring -->
-  <rect x="24" y="24" width="464" height="464" rx="96" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="4"/>
+  <rect x="24" y="24" width="464" height="464" rx="100" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="4"/>
   
   <!-- Inner Card Emblem with Shadow -->
   <g filter="url(#shadow)">
     <!-- Main Center Circle -->
-    <circle cx="256" cy="256" r="140" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.25)" stroke-width="6"/>
+    <circle cx="256" cy="240" r="140" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.25)" stroke-width="6"/>
     
-    <!-- Stylized Split Symbol / Currency Symbol (₹ & Arrows) -->
-    <!-- Rupee top bar -->
-    <path d="M 180 185 L 332 185" stroke="#ffffff" stroke-width="26" stroke-linecap="round"/>
-    <!-- Rupee second bar -->
-    <path d="M 180 230 L 290 230" stroke="#ffffff" stroke-width="26" stroke-linecap="round"/>
-    <!-- Rupee curve & diagonal split line -->
-    <path d="M 235 230 C 295 230, 295 185, 235 185" fill="none" stroke="#ffffff" stroke-width="26" stroke-linecap="round"/>
-    <path d="M 220 230 L 320 345" stroke="url(#gold)" stroke-width="28" stroke-linecap="round"/>
-    <path d="M 185 345 L 235 345" stroke="#ffffff" stroke-width="24" stroke-linecap="round"/>
+    <!-- Original Monogram Glyph (Interlocking C + S with Split Node) -->
+    <!-- Campus Node C (Top Arc) -->
+    <path d="M 330 180 C 310 145, 270 120, 220 120 C 145 120, 95 180, 95 245 C 95 275, 105 305, 125 325" fill="none" stroke="#FFFFFF" stroke-width="36" stroke-linecap="round"/>
     
-    <!-- Sparkles -->
-    <path d="M 360 140 L 368 158 L 386 166 L 368 174 L 360 192 L 352 174 L 334 166 L 352 158 Z" fill="url(#gold)"/>
-    <circle cx="150" cy="300" r="8" fill="#fde047"/>
+    <!-- Split Node S (Bottom Arc) -->
+    <path d="M 182 300 C 202 335, 242 360, 292 360 C 367 360, 417 300, 417 235 C 417 205, 407 175, 387 155" fill="none" stroke="#FFFFFF" stroke-width="36" stroke-linecap="round"/>
+    
+    <!-- Center Dividing Split Node -->
+    <circle cx="256" cy="240" r="42" fill="url(#prism)"/>
+    <path d="M 195 300 L 317 180" stroke="#6654D9" stroke-width="26" stroke-linecap="round"/>
   </g>
   
-  <!-- CampusSplit Title -->
-  <text x="256" y="440" text-anchor="middle" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="800" font-size="34" fill="#ffffff" letter-spacing="1.5">CAMPUSSPLIT</text>
+  <!-- CampusSplit Wordmark -->
+  <text x="256" y="445" text-anchor="middle" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="900" font-size="34" fill="#FFFFFF" letter-spacing="2">CAMPUSSPLIT</text>
 </svg>

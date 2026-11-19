@@ -8,27 +8,41 @@ export default {
   theme: {
     extend: {
       colors: {
+        campus: {
+          purple: '#6654D9',
+          lavender: '#917FF2',
+          lightLavender: '#DCD6FF',
+          darkBg: '#17172B',
+          darkCard: '#21213E',
+          darkTile: '#29294D',
+          lightBg: '#F7F7FC',
+          lightCard: '#FFFFFF',
+          lightTile: '#F0EFF9',
+          emerald: '#10B981',
+          rose: '#FF5A79',
+          amber: '#F59E0B',
+        },
         primary: {
-          50: '#f5f3ff',
-          100: '#ede9fe',
-          200: '#ddd6fe',
-          300: '#c4b5fd',
-          400: '#a78bfa',
-          500: '#8b5cf6',
-          600: '#7c3aed',
-          700: '#6d28d9',
-          800: '#5b21b6',
-          900: '#4c1d95',
+          50: '#f7f6fe',
+          100: '#edeafd',
+          200: '#dcd6ff',
+          300: '#beb3fb',
+          400: '#917ff2',
+          500: '#6654d9',
+          600: '#5843cc',
+          700: '#4a34b8',
+          800: '#3e2c99',
+          900: '#34267e',
         },
         brand: {
-          indigo: '#4f46e5',
-          purple: '#7c3aed',
-          violet: '#8b5cf6',
+          indigo: '#6654D9',
+          purple: '#6654D9',
+          violet: '#917FF2',
           emerald: '#10b981',
-          rose: '#f43f5e',
+          rose: '#ff5a79',
           amber: '#f59e0b',
-          dark: '#0f172a',
-          surface: '#1e293b'
+          dark: '#17172B',
+          surface: '#21213E'
         }
       },
       fontFamily: {

@@ -44,44 +44,44 @@ export default function Groups() {
   });
 
   return (
-    <div className="p-4 sm:p-8 space-y-6 max-w-6xl mx-auto pb-24 lg:pb-8">
+    <div className="p-4 sm:p-8 space-y-6 max-w-6xl mx-auto pb-28 lg:pb-12 transition-colors duration-200">
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <h1 className="text-2xl font-black text-[#17172B] dark:text-white tracking-tight">
             My Groups
           </h1>
-          <p className="text-xs sm:text-sm text-slate-600 dark:text-neutral-400 font-medium">
-            Manage your shared expenses with college friends and hostel roommates
+          <p className="text-xs sm:text-sm text-[#7E7D9C] dark:text-[#A5A4BF] font-semibold">
+            Manage your shared expenses with college friends, trips, and roommates
           </p>
         </div>
 
         <div className="flex items-center gap-2.5">
           <button
             onClick={() => setIsJoinOpen(true)}
-            className="px-4 py-2 rounded-xl bg-white dark:bg-black border border-slate-200 dark:border-neutral-800 text-slate-700 dark:text-neutral-200 font-semibold text-xs shadow-sm hover:bg-slate-50 dark:hover:bg-neutral-900 active:scale-95 transition-all flex items-center gap-1.5"
+            className="px-4 py-2 rounded-xl bg-white dark:bg-[#21213E] border border-[#EAE9F5] dark:border-[rgba(145,127,242,0.16)] text-[#17172B] dark:text-white font-bold text-xs shadow-sm hover:bg-[#F0EFF9] dark:hover:bg-[#29294D] active:scale-95 transition-all flex items-center gap-1.5"
           >
-            <KeyRound className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+            <KeyRound className="w-3.5 h-3.5 text-[#6654D9] dark:text-[#917FF2]" />
             <span>Join with Code</span>
           </button>
           <button
             onClick={() => setIsCreateOpen(true)}
-            className="px-4 py-2 rounded-xl gradient-brand text-white font-semibold text-xs shadow-md shadow-purple-600/30 hover:brightness-110 active:scale-95 transition-all flex items-center gap-1.5"
+            className="px-4 py-2 rounded-xl gradient-brand text-white font-bold text-xs shadow-md shadow-[#6654D9]/30 hover:brightness-105 active:scale-95 transition-all flex items-center gap-1.5"
           >
-            <Plus className="w-4 h-4 stroke-[2.5]" />
+            <Plus className="w-4 h-4 stroke-[3]" />
             <span>Create Group</span>
           </button>
         </div>
       </div>
 
       {error && (
-        <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 text-amber-800 dark:text-amber-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
-          <div className="text-xs sm:text-sm font-medium">
+        <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 text-amber-900 dark:text-amber-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+          <div className="text-xs sm:text-sm font-semibold">
             <span>{error}</span>
           </div>
           <button
             onClick={loadGroups}
-            className="px-3.5 py-1.5 rounded-xl bg-amber-600 text-white font-semibold text-xs hover:bg-amber-700 active:scale-95 transition-all self-end sm:self-auto"
+            className="px-3.5 py-1.5 rounded-xl bg-amber-600 text-white font-bold text-xs hover:bg-amber-700 active:scale-95 transition-all self-end sm:self-auto"
           >
             Retry
           </button>
@@ -91,13 +91,13 @@ export default function Groups() {
       {/* Search & Filter Toolbar */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="relative w-full sm:w-80">
-          <Search className="absolute left-3.5 top-2.5 w-4 h-4 text-slate-500 dark:text-neutral-400" />
+          <Search className="absolute left-3.5 top-2.5 w-4 h-4 text-[#7E7D9C]" />
           <input
             type="text"
             placeholder="Search groups..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-3.5 py-2 bg-white dark:bg-black border border-slate-200 dark:border-neutral-800 text-slate-900 dark:text-white rounded-xl text-xs placeholder:text-slate-500 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-sm"
+            className="w-full pl-9 pr-3.5 py-2 bg-white dark:bg-[#21213E] border border-[#EAE9F5] dark:border-[rgba(145,127,242,0.16)] text-[#17172B] dark:text-white rounded-xl text-xs font-semibold placeholder-[#7E7D9C] shadow-sm"
           />
         </div>
 
@@ -106,10 +106,10 @@ export default function Groups() {
             <button
               key={cat}
               onClick={() => setCategoryFilter(cat)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap border transition-all ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
                 categoryFilter === cat
-                  ? 'bg-purple-600 text-white border-purple-600 shadow-sm'
-                  : 'bg-white dark:bg-black text-slate-700 dark:text-neutral-300 border-slate-200 dark:border-neutral-800 hover:bg-slate-50 dark:hover:bg-neutral-900'
+                  ? 'bg-[#6654D9] text-white shadow-md shadow-[#6654D9]/25'
+                  : 'bg-white dark:bg-[#21213E] text-[#636280] dark:text-[#A5A4BF] border border-[#EAE9F5] dark:border-[rgba(145,127,242,0.16)] hover:bg-[#F0EFF9] dark:hover:bg-[#29294D]'
               }`}
             >
               {cat}
@@ -122,7 +122,7 @@ export default function Groups() {
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 animate-pulse">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="h-48 bg-slate-200 dark:bg-neutral-900 rounded-2xl"></div>
+            <div key={i} className="h-48 bg-[#EAE9F5] dark:bg-[#21213E] rounded-2xl"></div>
           ))}
         </div>
       ) : (
@@ -135,20 +135,20 @@ export default function Groups() {
               <NavLink
                 key={g.id}
                 to={`/groups/${g.id}`}
-                className="bg-white dark:bg-black p-5 rounded-2xl border border-slate-200/80 dark:border-neutral-800 shadow-sm hover:shadow-lg hover:border-purple-300 dark:hover:border-purple-600 transition-all flex flex-col justify-between group"
+                className="campus-card campus-card-hover p-5 flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-3">
                     <CategoryBadge categoryId={g.category} size="xs" />
-                    <span className="font-mono text-[11px] text-purple-700 dark:text-purple-300 font-bold bg-purple-50 dark:bg-purple-950/80 px-2 py-0.5 rounded border border-purple-100 dark:border-purple-800/60">
+                    <span className="font-mono text-[10px] text-[#6654D9] dark:text-[#DCD6FF] font-black bg-[#6654D9]/10 dark:bg-[#6654D9]/20 px-2 py-0.5 rounded-md border border-[#6654D9]/30">
                       {g.invite_code}
                     </span>
                   </div>
 
-                  <h3 className="font-bold text-base text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors line-clamp-1">
+                  <h3 className="font-black text-base text-[#17172B] dark:text-white group-hover:text-[#6654D9] dark:group-hover:text-[#917FF2] transition-colors line-clamp-1">
                     {g.name}
                   </h3>
-                  <p className="text-xs text-slate-600 dark:text-neutral-400 mt-1 line-clamp-2 font-medium">
+                  <p className="text-xs text-[#7E7D9C] dark:text-[#A5A4BF] mt-1 line-clamp-2 font-medium">
                     {g.description || 'No description provided'}
                   </p>
 
@@ -159,37 +159,45 @@ export default function Groups() {
                         <img
                           key={m.id}
                           src={m.avatar_url || `https://api.dicebear.com/7.x/fun-emoji/svg?seed=${m.name}`}
-                          className="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-black object-cover"
+                          className="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-[#21213E] object-cover"
                           alt={m.name}
                         />
                       ))}
                     </div>
-                    <span className="text-[11px] text-slate-600 dark:text-neutral-400 font-bold">
+                    <span className="text-[11px] text-[#7E7D9C] dark:text-[#A5A4BF] font-bold">
                       {g.memberCount} members
                     </span>
                   </div>
                 </div>
 
-                <div className="pt-4 mt-4 border-t border-slate-100 dark:border-neutral-800 flex items-center justify-between">
+                <div className="pt-4 mt-4 border-t border-[#EAE9F5] dark:border-[rgba(145,127,242,0.16)] flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] uppercase font-bold text-slate-600 dark:text-neutral-400 block tracking-wider">Total Spend</span>
-                    <span className="text-xs font-bold text-slate-900 dark:text-white">
+                    <span className="text-[10px] uppercase font-black text-[#7E7D9C] dark:text-[#A5A4BF] block tracking-wider">
+                      Total Spend
+                    </span>
+                    <span className="text-xs font-black text-[#17172B] dark:text-white">
                       {formatCurrency(g.totalSpending)}
                     </span>
                   </div>
 
                   <div className="text-right">
-                    <span className="text-[10px] uppercase font-bold text-slate-600 dark:text-neutral-400 block tracking-wider">Your Balance</span>
+                    <span className="text-[10px] uppercase font-black text-[#7E7D9C] dark:text-[#A5A4BF] block tracking-wider">
+                      Your Balance
+                    </span>
                     <span
-                      className={`text-xs font-bold px-2 py-0.5 rounded-md inline-block ${
+                      className={`text-xs font-black px-2 py-0.5 rounded-md inline-block ${
                         isOwed
                           ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300'
                           : owes
                           ? 'bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300'
-                          : 'bg-slate-100 dark:bg-neutral-900 text-slate-700 dark:text-neutral-300'
+                          : 'bg-[#F0EFF9] dark:bg-[#29294D] text-[#7E7D9C]'
                       }`}
                     >
-                      {isOwed ? `+${formatCurrency(g.myBalance)}` : owes ? `-${formatCurrency(Math.abs(g.myBalance))}` : 'Settled'}
+                      {isOwed
+                        ? `+${formatCurrency(g.myBalance)}`
+                        : owes
+                        ? `-${formatCurrency(Math.abs(g.myBalance))}`
+                        : 'Settled'}
                     </span>
                   </div>
                 </div>
@@ -198,17 +206,17 @@ export default function Groups() {
           })}
 
           {filteredGroups.length === 0 && (
-            <div className="sm:col-span-2 lg:col-span-3 bg-white rounded-3xl border border-dashed border-slate-300 p-12 text-center space-y-4">
-              <Users2 className="w-12 h-12 text-slate-300 mx-auto" />
+            <div className="sm:col-span-2 lg:col-span-3 campus-card p-12 text-center space-y-4 border-dashed">
+              <Users2 className="w-12 h-12 text-[#7E7D9C] dark:text-[#A5A4BF] mx-auto opacity-50" />
               <div>
-                <h3 className="font-bold text-slate-800 text-base">No groups found</h3>
-                <p className="text-xs text-slate-400 max-w-sm mx-auto mt-1">
+                <h3 className="font-black text-[#17172B] dark:text-white text-base">No groups found</h3>
+                <p className="text-xs text-[#7E7D9C] dark:text-[#A5A4BF] max-w-sm mx-auto mt-1 font-medium">
                   You are not a member of any group matching this filter.
                 </p>
               </div>
               <button
                 onClick={() => setIsCreateOpen(true)}
-                className="px-5 py-2.5 rounded-xl gradient-brand text-white font-semibold text-xs shadow-md"
+                className="px-5 py-2.5 rounded-xl gradient-brand text-white font-bold text-xs shadow-md"
               >
                 Create a Group Now
               </button>

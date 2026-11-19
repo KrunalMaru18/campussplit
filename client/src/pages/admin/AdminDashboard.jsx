@@ -333,7 +333,7 @@ export default function AdminDashboard() {
                 localStorage.setItem('campussplit_token', admTok);
               }
             }}
-            className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs shadow-md shadow-purple-600/30 transition-all flex items-center gap-2 active:scale-95"
+            className="px-3.5 py-2 rounded-xl gradient-brand text-white font-black text-xs shadow-md shadow-[#6654D9]/30 transition-all flex items-center gap-2 active:scale-95"
             title="Open Student Site"
           >
             <Users className="w-4 h-4" />

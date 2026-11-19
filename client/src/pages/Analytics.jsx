@@ -16,15 +16,15 @@ import { analyticsApi, groupsApi } from '../services/api';
 import { formatCurrency } from '../utils/formatters';
 
 const CHART_COLORS = [
-  '#7c3aed',
-  '#4f46e5',
-  '#10b981',
-  '#f59e0b',
-  '#f43f5e',
-  '#06b6d4',
-  '#8b5cf6',
-  '#ec4899',
-  '#64748b',
+  '#6654D9',
+  '#917FF2',
+  '#10B981',
+  '#F59E0B',
+  '#FF5A79',
+  '#06B6D4',
+  '#8B5CF6',
+  '#EC4899',
+  '#6366F1',
 ];
 
 export default function Analytics() {
@@ -62,25 +62,25 @@ export default function Analytics() {
   }, [selectedGroupId]);
 
   return (
-    <div className="p-4 sm:p-8 space-y-6 max-w-6xl mx-auto pb-24 lg:pb-8">
+    <div className="p-4 sm:p-8 space-y-6 max-w-6xl mx-auto pb-28 lg:pb-12 transition-colors duration-200">
       {/* Header & Filter */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-            Financial Reports & Analytics
+          <h1 className="text-2xl font-black text-[#17172B] dark:text-white tracking-tight">
+            Spending Trends & Analytics
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500">
-            Gain transparent insights into category spending trends and member contributions
+          <p className="text-xs sm:text-sm text-[#7E7D9C] dark:text-[#A5A4BF] font-semibold">
+            Gain transparent visual insights into category spending patterns and group balances
           </p>
         </div>
 
         {/* Group Selector Filter */}
         <div className="flex items-center gap-2">
-          <Filter className="w-4 h-4 text-slate-400" />
+          <Filter className="w-4 h-4 text-[#7E7D9C]" />
           <select
             value={selectedGroupId}
             onChange={(e) => setSelectedGroupId(e.target.value)}
-            className="px-3.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="px-3.5 py-2 bg-white dark:bg-[#21213E] border border-[#EAE9F5] dark:border-[rgba(145,127,242,0.16)] rounded-xl text-xs font-bold text-[#17172B] dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#6654D9]"
           >
             <option value="all">All Groups Combined</option>
             {groups.map((g) => (
@@ -94,33 +94,33 @@ export default function Analytics() {
 
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-pulse">
-          <div className="h-80 bg-slate-200 rounded-2xl"></div>
-          <div className="h-80 bg-slate-200 rounded-2xl"></div>
+          <div className="h-80 bg-[#EAE9F5] dark:bg-[#21213E] rounded-3xl"></div>
+          <div className="h-80 bg-[#EAE9F5] dark:bg-[#21213E] rounded-3xl"></div>
         </div>
       ) : (
         <div className="space-y-6">
           {/* Top Total Stat Card */}
-          <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-between">
+          <div className="campus-card p-6 flex items-center justify-between">
             <div>
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">
+              <span className="text-xs font-black text-[#7E7D9C] dark:text-[#A5A4BF] uppercase tracking-wider block">
                 Total Expenses Analyzed
               </span>
-              <span className="text-3xl font-extrabold text-slate-900">
+              <span className="text-3xl font-black text-[#17172B] dark:text-white">
                 {formatCurrency(data?.grandTotal || 0)}
               </span>
             </div>
-            <div className="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center">
-              <PieChart className="w-6 h-6" />
+            <div className="w-12 h-12 rounded-2xl bg-[#6654D9]/10 text-[#6654D9] dark:text-[#917FF2] flex items-center justify-center">
+              <PieChart className="w-6 h-6 stroke-[2.2]" />
             </div>
           </div>
 
           {/* Charts Row */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Chart 1: Category Spending Breakdown (Donut/Pie Chart) */}
-            <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+            <div className="campus-card p-6 space-y-4">
               <div>
-                <h3 className="font-bold text-base text-slate-900">Category Breakdown</h3>
-                <p className="text-xs text-slate-500">Distribution of spending across categories</p>
+                <h3 className="font-black text-base text-[#17172B] dark:text-white">Category Breakdown</h3>
+                <p className="text-xs text-[#7E7D9C] dark:text-[#A5A4BF] font-medium">Distribution of spending across expense types</p>
               </div>
 
               {data?.categoryBreakdown?.length > 0 ? (
@@ -145,83 +145,68 @@ export default function Analytics() {
                       </Pie>
                       <Tooltip
                         formatter={(val) => [formatCurrency(val), 'Amount']}
-                        contentStyle={{ borderRadius: '12px', fontSize: '12px' }}
+                        contentStyle={{
+                          borderRadius: '16px',
+                          fontSize: '12px',
+                          fontWeight: 'bold',
+                          backgroundColor: '#21213E',
+                          color: '#FFFFFF',
+                          borderColor: 'rgba(145, 127, 242, 0.3)',
+                        }}
                       />
                     </RechartsPieChart>
                   </ResponsiveContainer>
                 </div>
               ) : (
-                <p className="text-xs text-slate-400 text-center py-16">No expense data available</p>
+                <p className="text-xs text-[#7E7D9C] text-center py-16 font-medium">No expense data available</p>
               )}
 
               {/* Legend List */}
               <div className="grid grid-cols-2 gap-2 pt-2">
                 {data?.categoryBreakdown?.map((cat, i) => (
-                  <div key={cat.name} className="flex items-center gap-2 text-xs">
+                  <div key={cat.name} className="flex items-center gap-2 text-xs font-semibold">
                     <div
                       className="w-3 h-3 rounded-full shrink-0"
                       style={{ backgroundColor: CHART_COLORS[i % CHART_COLORS.length] }}
                     ></div>
-                    <span className="text-slate-600 truncate">{cat.name}:</span>
-                    <span className="font-bold text-slate-800 ml-auto">{cat.percentage}%</span>
+                    <span className="text-[#636280] dark:text-[#DCD6FF] truncate">{cat.name}:</span>
+                    <span className="font-black text-[#17172B] dark:text-white ml-auto">{cat.percentage}%</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Chart 2: Monthly Trends Bar Chart */}
-            <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+            <div className="campus-card p-6 space-y-4">
               <div>
-                <h3 className="font-bold text-base text-slate-900">Monthly Spending Trends</h3>
-                <p className="text-xs text-slate-500">Group total vs personal spending</p>
+                <h3 className="font-black text-base text-[#17172B] dark:text-white">Monthly Spending Trends</h3>
+                <p className="text-xs text-[#7E7D9C] dark:text-[#A5A4BF] font-medium">Overall group spending totals</p>
               </div>
 
               {data?.monthlySpending?.length > 0 ? (
                 <div className="h-64 w-full">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={data.monthlySpending}>
-                      <XAxis dataKey="month" tick={{ fontSize: 11 }} />
-                      <YAxis tick={{ fontSize: 11 }} tickFormatter={(val) => `₹${val}`} />
+                      <XAxis dataKey="month" stroke="#7E7D9C" fontSize={11} />
+                      <YAxis stroke="#7E7D9C" fontSize={11} tickFormatter={(val) => `₹${val}`} />
                       <Tooltip
-                        formatter={(val) => [formatCurrency(val), 'Amount']}
-                        contentStyle={{ borderRadius: '12px', fontSize: '12px' }}
+                        formatter={(val) => [formatCurrency(val), 'Total']}
+                        contentStyle={{
+                          borderRadius: '16px',
+                          fontSize: '12px',
+                          fontWeight: 'bold',
+                          backgroundColor: '#21213E',
+                          color: '#FFFFFF',
+                          borderColor: 'rgba(145, 127, 242, 0.3)',
+                        }}
                       />
-                      <Legend wrapperStyle={{ fontSize: '12px' }} />
-                      <Bar dataKey="total" name="Total Group Spend" fill="#7c3aed" radius={[4, 4, 0, 0]} />
-                      <Bar dataKey="mySpend" name="My Spending" fill="#10b981" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="total" fill="#6654D9" radius={[8, 8, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
               ) : (
-                <p className="text-xs text-slate-400 text-center py-16">No monthly history yet</p>
+                <p className="text-xs text-[#7E7D9C] text-center py-16 font-medium">No monthly data available</p>
               )}
-            </div>
-          </div>
-
-          {/* Member Spending Ranking */}
-          <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
-            <div>
-              <h3 className="font-bold text-base text-slate-900">Top Spenders</h3>
-              <p className="text-xs text-slate-500">Who covered bills the most</p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-              {data?.memberContributions?.map((mem, idx) => (
-                <div
-                  key={mem.name}
-                  className="p-3.5 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between gap-3"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <span className="font-bold text-xs text-purple-700 bg-purple-100 w-6 h-6 rounded-full flex items-center justify-center">
-                      #{idx + 1}
-                    </span>
-                    <span className="font-semibold text-xs text-slate-800">{mem.name}</span>
-                  </div>
-                  <span className="font-extrabold text-xs text-slate-900">
-                    {formatCurrency(mem.amount)}
-                  </span>
-                </div>
-              ))}
             </div>
           </div>
         </div>

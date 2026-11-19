@@ -35,8 +35,8 @@ const AdminDashboard = React.lazy(() => import('./pages/admin/AdminDashboard'));
 function PageLoadingFallback() {
   return (
     <div className="min-h-[50vh] flex flex-col items-center justify-center p-8 space-y-3">
-      <div className="w-9 h-9 border-3 border-purple-600/30 border-t-purple-600 rounded-full animate-spin"></div>
-      <p className="text-xs font-medium text-slate-400 dark:text-neutral-500">Loading view...</p>
+      <div className="w-9 h-9 border-3 border-[#6654D9]/30 border-t-[#6654D9] rounded-full animate-spin"></div>
+      <p className="text-xs font-semibold text-[#7E7D9C] dark:text-[#A5A4BF]">Loading view...</p>
     </div>
   );
 }
@@ -47,8 +47,8 @@ function ProtectedRoute({ children }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-black">
-        <div className="w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen flex items-center justify-center bg-[#F7F7FC] dark:bg-[#17172B]">
+        <div className="w-10 h-10 border-4 border-[#6654D9] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }

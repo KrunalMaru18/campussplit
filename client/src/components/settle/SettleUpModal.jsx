@@ -93,7 +93,7 @@ export default function SettleUpModal({
           particleCount: 80,
           spread: 70,
           origin: { y: 0.6 },
-          colors: ['#7c3aed', '#10b981', '#3b82f6', '#f59e0b'],
+          colors: ['#6654D9', '#10B981', '#917FF2', '#F59E0B'],
         });
       } catch (e) {
         // confetti fallback
@@ -110,68 +110,68 @@ export default function SettleUpModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm overflow-y-auto animate-fade-in">
-      <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden my-8">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-sm overflow-y-auto animate-fade-in">
+      <div className="relative w-full max-w-md bg-white dark:bg-[#21213E] rounded-t-3xl sm:rounded-3xl shadow-2xl border border-[#EAE9F5] dark:border-[rgba(145,127,242,0.2)] overflow-hidden my-0 sm:my-8 transition-all">
         {/* Header */}
         <div className="gradient-emerald p-5 text-white flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold flex items-center gap-2">
-              <CheckCircle2 className="w-5 h-5" />
+            <h2 className="text-lg font-black flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5 stroke-[2.5]" />
               <span>Settle Up Payment</span>
             </h2>
-            <p className="text-xs text-emerald-100 mt-0.5">
-              Record a payment to clear or reduce balance
+            <p className="text-xs text-emerald-100 mt-0.5 font-medium">
+              Record a payment to clear or reduce group balance
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 hover:bg-white/10 rounded-full transition-colors"
+            className="p-1.5 hover:bg-white/20 rounded-full transition-colors"
           >
             <X className="w-5 h-5 text-white" />
           </button>
         </div>
 
         {/* Content */}
-        <form onSubmit={handleSettle} className="p-6 space-y-4">
+        <form onSubmit={handleSettle} className="p-5 sm:p-6 space-y-4">
           {error && (
-            <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+            <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2 font-bold">
               <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
               <span>{error}</span>
             </div>
           )}
 
           {/* Visual Transfer Pill */}
-          <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2 min-w-0">
+          <div className="bg-[#F0EFF9]/80 dark:bg-[#17172B] border border-[#DCD6FF] dark:border-[rgba(145,127,242,0.2)] rounded-2xl p-3.5 flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2.5 min-w-0">
               {payer?.avatar_url ? (
-                <img src={payer.avatar_url} className="w-8 h-8 rounded-full object-cover shrink-0" />
+                <img src={payer.avatar_url} className="w-8 h-8 rounded-full object-cover shrink-0 ring-2 ring-emerald-500/30" />
               ) : (
                 <div className="w-8 h-8 rounded-full bg-slate-400 text-white text-xs font-bold flex items-center justify-center shrink-0">
                   {getInitials(payer?.name)}
                 </div>
               )}
               <div className="min-w-0">
-                <span className="text-[10px] uppercase font-bold text-slate-400 block">Payer</span>
-                <span className="text-xs font-bold text-slate-800 truncate block">
+                <span className="text-[10px] uppercase font-black text-[#7E7D9C] block tracking-wider">Payer</span>
+                <span className="text-xs font-black text-[#17172B] dark:text-white truncate block">
                   {payer?.name} {payer?.id === user?.id ? '(You)' : ''}
                 </span>
               </div>
             </div>
 
             <div className="flex flex-col items-center justify-center px-2">
-              <ArrowRight className="w-5 h-5 text-emerald-600 stroke-[2.5]" />
-              <span className="text-[10px] text-emerald-700 font-bold">PAYS</span>
+              <ArrowRight className="w-5 h-5 text-emerald-600 dark:text-emerald-400 stroke-[3]" />
+              <span className="text-[9px] text-emerald-700 dark:text-emerald-400 font-black tracking-wider">PAYS</span>
             </div>
 
-            <div className="flex items-center gap-2 min-w-0 text-right">
+            <div className="flex items-center gap-2.5 min-w-0 text-right">
               <div className="min-w-0">
-                <span className="text-[10px] uppercase font-bold text-slate-400 block">Receiver</span>
-                <span className="text-xs font-bold text-slate-800 truncate block">
+                <span className="text-[10px] uppercase font-black text-[#7E7D9C] block tracking-wider">Receiver</span>
+                <span className="text-xs font-black text-[#17172B] dark:text-white truncate block">
                   {receiver?.name} {receiver?.id === user?.id ? '(You)' : ''}
                 </span>
               </div>
               {receiver?.avatar_url ? (
-                <img src={receiver.avatar_url} className="w-8 h-8 rounded-full object-cover shrink-0" />
+                <img src={receiver.avatar_url} className="w-8 h-8 rounded-full object-cover shrink-0 ring-2 ring-emerald-500/30" />
               ) : (
                 <div className="w-8 h-8 rounded-full bg-slate-400 text-white text-xs font-bold flex items-center justify-center shrink-0">
                   {getInitials(receiver?.name)}
@@ -183,13 +183,13 @@ export default function SettleUpModal({
           {/* Selectors for Payer and Receiver */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-black text-[#17172B] dark:text-white uppercase tracking-wider mb-1.5">
                 Who Paid?
               </label>
               <select
                 value={payerId}
                 onChange={(e) => setPayerId(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-3 py-2 bg-white dark:bg-[#17172B] border border-[#DCD6FF] dark:border-[rgba(145,127,242,0.25)] rounded-xl text-xs font-bold text-[#17172B] dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
               >
                 {members.map((m) => (
                   <option key={m.id} value={m.id}>
@@ -199,13 +199,13 @@ export default function SettleUpModal({
               </select>
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-black text-[#17172B] dark:text-white uppercase tracking-wider mb-1.5">
                 Who Received?
               </label>
               <select
                 value={receiverId}
                 onChange={(e) => setReceiverId(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-3 py-2 bg-white dark:bg-[#17172B] border border-[#DCD6FF] dark:border-[rgba(145,127,242,0.25)] rounded-xl text-xs font-bold text-[#17172B] dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
               >
                 {members.map((m) => (
                   <option key={m.id} value={m.id} disabled={m.id === payerId}>
@@ -218,11 +218,11 @@ export default function SettleUpModal({
 
           {/* Amount Input */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-              Settlement Amount (₹)
+            <label className="block text-xs font-black text-[#17172B] dark:text-white uppercase tracking-wider mb-1.5">
+              Settlement Amount (₹ INR)
             </label>
             <div className="relative">
-              <span className="absolute left-3.5 top-2.5 text-slate-400 font-bold text-base">₹</span>
+              <span className="absolute left-3.5 top-2.5 text-emerald-600 dark:text-emerald-400 font-black text-base">₹</span>
               <input
                 type="number"
                 step="0.01"
@@ -231,14 +231,14 @@ export default function SettleUpModal({
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 required
-                className="w-full pl-8 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-base font-bold text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full pl-8 pr-3.5 py-2.5 bg-white dark:bg-[#17172B] border border-[#DCD6FF] dark:border-[rgba(145,127,242,0.25)] rounded-xl text-base font-black text-[#17172B] dark:text-white placeholder-[#7E7D9C] focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
           </div>
 
           {/* Payment Method Selector */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-black text-[#17172B] dark:text-white uppercase tracking-wider mb-1.5">
               Payment Method
             </label>
             <div className="grid grid-cols-3 gap-2">
@@ -247,8 +247,8 @@ export default function SettleUpModal({
                 onClick={() => setPaymentMethod('UPI')}
                 className={`py-2 px-3 rounded-xl border flex items-center justify-center gap-1.5 text-xs font-bold transition-all ${
                   paymentMethod === 'UPI'
-                    ? 'bg-emerald-50 border-emerald-500 text-emerald-800 shadow-sm'
-                    : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                    ? 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-500 text-emerald-800 dark:text-emerald-200 shadow-sm'
+                    : 'bg-white dark:bg-[#17172B] border-[#DCD6FF] dark:border-[rgba(145,127,242,0.2)] text-[#636280] dark:text-[#A5A4BF]'
                 }`}
               >
                 <Smartphone className="w-3.5 h-3.5" />
@@ -259,8 +259,8 @@ export default function SettleUpModal({
                 onClick={() => setPaymentMethod('Cash')}
                 className={`py-2 px-3 rounded-xl border flex items-center justify-center gap-1.5 text-xs font-bold transition-all ${
                   paymentMethod === 'Cash'
-                    ? 'bg-emerald-50 border-emerald-500 text-emerald-800 shadow-sm'
-                    : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                    ? 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-500 text-emerald-800 dark:text-emerald-200 shadow-sm'
+                    : 'bg-white dark:bg-[#17172B] border-[#DCD6FF] dark:border-[rgba(145,127,242,0.2)] text-[#636280] dark:text-[#A5A4BF]'
                 }`}
               >
                 <Banknote className="w-3.5 h-3.5" />
@@ -271,8 +271,8 @@ export default function SettleUpModal({
                 onClick={() => setPaymentMethod('Other')}
                 className={`py-2 px-3 rounded-xl border flex items-center justify-center gap-1.5 text-xs font-bold transition-all ${
                   paymentMethod === 'Other'
-                    ? 'bg-emerald-50 border-emerald-500 text-emerald-800 shadow-sm'
-                    : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                    ? 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-500 text-emerald-800 dark:text-emerald-200 shadow-sm'
+                    : 'bg-white dark:bg-[#17172B] border-[#DCD6FF] dark:border-[rgba(145,127,242,0.2)] text-[#636280] dark:text-[#A5A4BF]'
                 }`}
               >
                 <span>Other</span>
@@ -282,19 +282,19 @@ export default function SettleUpModal({
 
           {/* UPI Helper Card if UPI is selected */}
           {paymentMethod === 'UPI' && receiver && (
-            <div className="p-3 bg-purple-50 border border-purple-200 rounded-xl space-y-2">
-              <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-purple-900">
+            <div className="p-3.5 bg-[#6654D9]/10 dark:bg-[#6654D9]/20 border border-[#6654D9]/30 rounded-2xl space-y-2">
+              <div className="flex items-center justify-between text-xs font-bold">
+                <span className="text-[#6654D9] dark:text-[#DCD6FF]">
                   {receiver.name}'s UPI ID:
                 </span>
                 <button
                   type="button"
                   onClick={handleCopyUpi}
-                  className="flex items-center gap-1 text-[11px] font-bold text-purple-700 hover:text-purple-900 bg-white px-2 py-0.5 rounded border border-purple-200 transition-colors"
+                  className="flex items-center gap-1 text-[11px] font-black text-[#6654D9] dark:text-[#DCD6FF] bg-white dark:bg-[#21213E] px-2.5 py-0.5 rounded-lg border border-[#6654D9]/30 shadow-sm transition-colors"
                 >
                   {copiedUpi ? (
                     <>
-                      <Check className="w-3 h-3 text-emerald-600" />
+                      <Check className="w-3 h-3 text-emerald-500" />
                       <span>Copied!</span>
                     </>
                   ) : (
@@ -305,11 +305,11 @@ export default function SettleUpModal({
                   )}
                 </button>
               </div>
-              <div className="font-mono text-xs text-purple-800 font-semibold bg-white p-2 rounded border border-purple-100 flex items-center justify-between">
+              <div className="font-mono text-xs text-[#17172B] dark:text-white font-bold bg-white dark:bg-[#21213E] p-2.5 rounded-xl border border-[#DCD6FF] dark:border-[rgba(145,127,242,0.2)] flex items-center justify-between">
                 <span>{receiverUpi}</span>
                 <a
                   href={`upi://pay?pa=${receiverUpi}&pn=${encodeURIComponent(receiver.name)}&am=${amount || 0}&cu=INR`}
-                  className="text-[10px] text-purple-600 hover:underline flex items-center gap-1"
+                  className="text-[10px] text-[#6654D9] dark:text-[#917FF2] font-black hover:underline flex items-center gap-1"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -323,43 +323,43 @@ export default function SettleUpModal({
           {/* Date & Note Grid */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-black text-[#17172B] dark:text-white uppercase tracking-wider mb-1.5">
                 Date
               </label>
               <input
                 type="date"
                 value={settlementDate}
                 onChange={(e) => setSettlementDate(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-3 py-2 bg-white dark:bg-[#17172B] border border-[#DCD6FF] dark:border-[rgba(145,127,242,0.25)] rounded-xl text-xs font-semibold text-[#17172B] dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                Notes (Ref / Txn ID)
+              <label className="block text-xs font-black text-[#17172B] dark:text-white uppercase tracking-wider mb-1.5">
+                Ref / Txn ID
               </label>
               <input
                 type="text"
-                placeholder="e.g. GPay Txn #8921"
+                placeholder="e.g. UPI Ref #7891"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-3 py-2 bg-white dark:bg-[#17172B] border border-[#DCD6FF] dark:border-[rgba(145,127,242,0.25)] rounded-xl text-xs font-semibold text-[#17172B] dark:text-white placeholder-[#7E7D9C] focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
           </div>
 
           {/* Submit Buttons */}
-          <div className="pt-3 flex items-center justify-end gap-3 border-t border-slate-100">
+          <div className="pt-3 flex items-center justify-end gap-3 border-t border-[#EAE9F5] dark:border-[rgba(145,127,242,0.16)]">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-semibold text-xs hover:bg-slate-50 transition-colors"
+              className="px-4 py-2.5 rounded-xl border border-[#DCD6FF] dark:border-[rgba(145,127,242,0.3)] text-[#636280] dark:text-[#A5A4BF] font-bold text-xs hover:bg-[#F0EFF9] dark:hover:bg-[#17172B] transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-2.5 rounded-xl gradient-emerald text-white font-semibold text-xs shadow-md shadow-emerald-600/30 hover:brightness-110 active:scale-95 disabled:opacity-50 transition-all flex items-center gap-1.5"
+              className="px-6 py-2.5 rounded-xl gradient-emerald text-white font-black text-xs shadow-md shadow-emerald-600/30 hover:brightness-105 active:scale-95 disabled:opacity-50 transition-all flex items-center gap-1.5"
             >
               {loading ? <span>Recording...</span> : <span>Confirm Settlement</span>}
             </button>

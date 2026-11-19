@@ -112,7 +112,7 @@ export default function Profile() {
       </div>
 
       {/* Main Settings Card */}
-      <div className="bg-white dark:bg-black rounded-3xl border border-slate-200/80 dark:border-neutral-800 p-6 sm:p-8 shadow-sm space-y-6">
+      <div className="campus-card p-6 sm:p-8 space-y-6">
         {/* Profile Avatar & Header */}
         <div className="flex flex-col sm:flex-row items-center gap-5">
           <div className="relative group">
@@ -251,7 +251,7 @@ export default function Profile() {
                 </div>
                 <div>
                   <span className="text-xs font-bold block">Dark Mode</span>
-                  <span className="text-[10px] text-slate-400">OLED Jet Black</span>
+                  <span className="text-[10px] text-[#7E7D9C] dark:text-[#A5A4BF]">Midnight Violet</span>
                 </div>
               </div>
               {theme === 'dark' && <Check className="w-4 h-4 text-purple-400" />}

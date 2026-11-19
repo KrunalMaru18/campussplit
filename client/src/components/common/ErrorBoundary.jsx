@@ -43,8 +43,8 @@ export default class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-slate-50 dark:bg-black text-slate-900 dark:text-white font-sans">
-          <div className="max-w-md w-full bg-white dark:bg-neutral-950 p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-neutral-800 shadow-xl text-center space-y-5">
+        <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-[#F7F7FC] dark:bg-[#17172B] text-[#17172B] dark:text-white font-sans">
+          <div className="max-w-md w-full campus-card p-6 sm:p-8 text-center space-y-5">
             <div className="w-16 h-16 rounded-2xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900 text-rose-600 dark:text-rose-400 mx-auto flex items-center justify-center shadow-md">
               <ShieldAlert className="w-8 h-8" />
             </div>
