@@ -327,11 +327,17 @@ export default function AdminDashboard() {
 
           <NavLink
             to="/dashboard"
-            className="px-3.5 py-1.5 rounded-xl bg-purple-50 dark:bg-purple-600/20 hover:bg-purple-100 dark:hover:bg-purple-600/30 border border-purple-200 dark:border-purple-500/30 text-purple-700 dark:text-purple-300 font-semibold text-xs transition-colors flex items-center gap-1.5"
+            onClick={() => {
+              const admTok = localStorage.getItem('campussplit_admin_token');
+              if (admTok && !localStorage.getItem('campussplit_token')) {
+                localStorage.setItem('campussplit_token', admTok);
+              }
+            }}
+            className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs shadow-md shadow-purple-600/30 transition-all flex items-center gap-2 active:scale-95"
+            title="Open Student Site"
           >
-            <Users className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Switch to Student View</span>
-            <span className="sm:hidden">Student</span>
+            <Users className="w-4 h-4" />
+            <span>Student Site</span>
           </NavLink>
 
           <button

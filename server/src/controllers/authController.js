@@ -116,9 +116,21 @@ exports.login = async (req, res) => {
       return res.status(401).json({ error: 'Invalid email or password.' });
     }
 
-    const token = jwt.sign({ id: user.id, email: user.email, name: user.name }, JWT_SECRET, {
-      expiresIn: '30d',
-    });
+    const isUserAdmin = Boolean(user.is_admin || user.email === 'krunal@campus.edu');
+    const adminId = user.admin_id || (isUserAdmin ? 'ADMIN-KRUNAL-007' : null);
+
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        is_admin: isUserAdmin,
+        role: isUserAdmin ? 'admin' : 'student',
+        admin_id: adminId,
+      },
+      JWT_SECRET,
+      { expiresIn: '30d' }
+    );
 
     res.json({
       message: 'Logged in successfully!',
@@ -129,6 +141,9 @@ exports.login = async (req, res) => {
         email: user.email,
         avatar_url: user.avatar_url,
         upi_id: user.upi_id,
+        is_admin: isUserAdmin,
+        role: isUserAdmin ? 'admin' : 'student',
+        admin_id: adminId,
       },
     });
   } catch (err) {
@@ -140,7 +155,7 @@ exports.login = async (req, res) => {
 exports.getMe = async (req, res) => {
   try {
     const result = await query(
-      'SELECT id, name, email, avatar_url, upi_id, created_at FROM users WHERE id = $1',
+      'SELECT id, name, email, avatar_url, upi_id, is_admin, admin_id, created_at FROM users WHERE id = $1',
       [req.user.id]
     );
 
@@ -148,7 +163,16 @@ exports.getMe = async (req, res) => {
       return res.status(404).json({ error: 'User not found.' });
     }
 
-    res.json({ user: result.rows[0] });
+    const u = result.rows[0];
+    const isUserAdmin = Boolean(u.is_admin || u.email === 'krunal@campus.edu');
+    res.json({
+      user: {
+        ...u,
+        is_admin: isUserAdmin,
+        role: isUserAdmin ? 'admin' : 'student',
+        admin_id: u.admin_id || (isUserAdmin ? 'ADMIN-KRUNAL-007' : null),
+      },
+    });
   } catch (err) {
     console.error('getMe error:', err);
     res.status(500).json({ error: 'Failed to retrieve profile: ' + err.message });

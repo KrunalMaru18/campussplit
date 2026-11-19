@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { User, Mail, Smartphone, Camera, LogOut, Check, Save, Sun, Moon, Upload, Sparkles } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
+import { User, Mail, Smartphone, Camera, LogOut, Check, Save, Sun, Moon, Upload, Sparkles, Shield } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { useToast } from '../context/ToastContext';
@@ -330,6 +331,31 @@ export default function Profile() {
               Friends can click &quot;Open UPI App&quot; or copy this ID directly when settling debts with you.
             </p>
           </div>
+
+          {/* Admin Site Quick Access for Super Admin */}
+          {(user?.is_admin ||
+            ['krunal@campus.edu', 'krunal@gmail.com', 'marukrunal.study@gmail.com', 'krunalmaru@gmail.com'].includes(
+              user?.email?.toLowerCase()
+            ) ||
+            user?.email?.toLowerCase().startsWith('krunal')) && (
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-purple-600/10 to-transparent border border-amber-500/30 flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-500 flex items-center justify-center shrink-0">
+                  <Shield className="w-5 h-5 fill-amber-400/20" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-slate-900 dark:text-white">Admin Site</h4>
+                  <p className="text-xs text-slate-500 dark:text-neutral-400">Super Admin Command Center & Student Database</p>
+                </div>
+              </div>
+              <NavLink
+                to="/admin"
+                className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-900 font-extrabold text-xs shadow-md transition-all shrink-0"
+              >
+                Admin Site →
+              </NavLink>
+            </div>
+          )}
 
           <div className="pt-4 flex items-center justify-between border-t border-slate-100 dark:border-neutral-800">
             <button

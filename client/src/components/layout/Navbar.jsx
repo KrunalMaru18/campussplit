@@ -11,7 +11,12 @@ export default function Navbar({ onOpenAddExpense, title = 'Dashboard' }) {
   const { isConnected } = useSocket();
   const { isDark, toggleTheme } = useTheme();
 
-  const isKrunalOrAdmin = user?.email === 'krunal@campus.edu' || user?.is_admin;
+  const isKrunalOrAdmin =
+    user?.is_admin ||
+    ['krunal@campus.edu', 'krunal@gmail.com', 'marukrunal.study@gmail.com', 'krunalmaru@gmail.com'].includes(
+      user?.email?.toLowerCase()
+    ) ||
+    user?.email?.toLowerCase().startsWith('krunal');
 
   return (
     <header className="sticky top-0 z-30 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-slate-200/80 dark:border-neutral-800 px-4 sm:px-8 py-3.5 flex items-center justify-between transition-colors duration-200">
@@ -60,16 +65,15 @@ export default function Navbar({ onOpenAddExpense, title = 'Dashboard' }) {
           {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-purple-600" />}
         </button>
 
-        {/* Admin Portal Button for Krunal / Admins */}
+        {/* Admin Site Button for Krunal / Super Admin */}
         {isKrunalOrAdmin && (
           <NavLink
             to="/admin"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 dark:bg-neutral-900 text-amber-300 hover:bg-slate-800 dark:hover:bg-neutral-800 font-bold text-xs border border-amber-500/30 shadow-sm transition-all"
-            title="Open Admin Portal"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/20 to-purple-600/20 hover:from-amber-500/30 hover:to-purple-600/30 text-amber-600 dark:text-amber-300 font-extrabold text-xs border border-amber-500/40 shadow-sm transition-all"
+            title="Open Admin Site"
           >
-            <Shield className="w-3.5 h-3.5 text-amber-400" />
-            <span className="hidden sm:inline">Admin Portal</span>
-            <span className="sm:hidden">Admin</span>
+            <Shield className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400 fill-amber-400/20" />
+            <span>Admin Site</span>
           </NavLink>
         )}
 

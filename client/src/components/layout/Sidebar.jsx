@@ -99,15 +99,19 @@ export default function Sidebar({ onOpenAddExpense }) {
         })}
 
         {/* Exclusive Super Admin link for Krunal */}
-        {(user?.email === 'krunal@campus.edu' || user?.is_admin) && (
+        {(user?.is_admin ||
+          ['krunal@campus.edu', 'krunal@gmail.com', 'marukrunal.study@gmail.com', 'krunalmaru@gmail.com'].includes(
+            user?.email?.toLowerCase()
+          ) ||
+          user?.email?.toLowerCase().startsWith('krunal')) && (
           <div className="pt-3 mt-2 border-t border-slate-100 dark:border-neutral-800">
             <NavLink
               to="/admin"
               className="admin-command-btn flex items-center justify-between px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all group shadow-md"
             >
               <div className="flex items-center gap-2.5">
-                <Shield className="w-4 h-4 text-amber-400 shrink-0" />
-                <span className="tracking-wide">Admin Command Center</span>
+                <Shield className="w-4 h-4 text-amber-400 shrink-0 fill-amber-400/20" />
+                <span className="tracking-wide">Admin Site</span>
               </div>
               <ChevronRight className="w-3.5 h-3.5 text-amber-400/80 group-hover:translate-x-0.5 transition-transform" />
             </NavLink>
